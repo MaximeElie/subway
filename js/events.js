@@ -50,13 +50,16 @@ class Events {
 
         static clickLine(event) {
             let line = HTML.lineFromEvent(event);
-            SubwayMap.toggleLine(line.id);
+            let isLineSelected = SubwayMap.isLineSelected(line.id);
 
             for (let station of HTML.stationsOf(line.id)) {
-                if (SubwayMap.isLineSelected(line.id))
-                    HTML.display.stationSelected(station);
-                else
+                if (isLineSelected) {
+                    SubwayMap.deselectStation(station.id);
                     HTML.display.stationNotSelected(station);
+                } else if (!SubwayMap.isStationSelected(station.id)) {
+                    SubwayMap.selectStation(station.id);
+                    HTML.display.stationSelected(station);
+                }
             }
         }
 

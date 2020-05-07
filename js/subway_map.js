@@ -32,21 +32,12 @@ class SubwayMap {
         this.stationsSelected.set(stationId, false);
     }
 
-    static toggleLine(lineId) {
-        let isLineSelected = this.isLineSelected(lineId);
-
-        for (let station of HTML.stationsOf(lineId)) {
-            if (isLineSelected)
-                this.deselectStation(station.id);
-            else
-                this.selectStation(station.id);
-        }
-    }
-
     static selectedStationsNames() {
         let names = [];
-        for (let i of this.stationsSelected)
-            names.push(HTML.stationName(i[0]));
+        for (let i of this.stationsSelected) {
+            if (i[1])
+                names.push(HTML.stationName(i[0]));
+        }
 
         return names;
     }
