@@ -30,11 +30,39 @@ class HTML {
         return element;
     }
 
+    static stationName(stationId) {
+        let a = document.getElementById(stationId).getElementsByClassName("underground_map_widget-station_name-nzuArteK")[0];
+        let str = a.innerHTML;
+        let prevLength;
+
+        do {
+            prevLength = str.length;
+            str = str.replace("\t", "").replace("\n", "");
+        } while (str.length != prevLength)
+
+        str = str.replace('" y="10">', '> ');
+
+        do {
+            prevLength = str.length;
+            str = str.replace(str.substring(str.search("<"), str.search(">") + 1), "");
+        } while (str.length != prevLength)
+
+        return str;
+    }
+
+    static postButton() {
+        return document.getElementById("post_button");
+    }
+
+    static responseText() {
+        return document.getElementById("response_text");
+    }
+
     static display = class {
 
         static stationHover(station) {
             for (let circle of station.getElementsByClassName("underground_map_widget-circle-FQ9ukpHC")) {
-                if(circle.previousElementSibling != null)
+                if (circle.previousElementSibling != null)
                     return;
                 let color = circle.getAttribute("stroke");
                 let html = '<circle cy="0" cx="0" r="5.5" fill="' + color + '" stroke="' + color + '" filter="url(#metroStationBlur)" opacity="0.4"></circle>';
@@ -44,10 +72,10 @@ class HTML {
                 text.setAttribute("class", "underground_map_widget-station_name-nzuArteK underground_map_widget-station_name--hover-GWgnPYHa");
             }
         }
-        
-        static stationNotHover(station) {    
+
+        static stationNotHover(station) {
             for (let circle of station.getElementsByClassName("underground_map_widget-circle-FQ9ukpHC")) {
-                if(circle.previousElementSibling == null)
+                if (circle.previousElementSibling == null)
                     return;
                 circle.parentElement.removeChild(circle.previousElementSibling);
             }
@@ -55,7 +83,7 @@ class HTML {
                 text.setAttribute("class", "underground_map_widget-station_name-nzuArteK");
             }
         }
-        
+
         static stationSelected(station) {
             for (let circle of station.getElementsByClassName("underground_map_widget-circle-FQ9ukpHC")) {
                 circle.parentElement.setAttribute("class", "underground_map_widget-selected_station-mEHkTAAi");
@@ -67,7 +95,7 @@ class HTML {
                 text.previousElementSibling.setAttribute("class", "underground_map_widget-selected-LAnsGaX6");
             }
         }
-        
+
         static stationNotSelected(station) {
             for (let circle of station.getElementsByClassName("underground_map_widget-circle-FQ9ukpHC")) {
                 circle.parentElement.setAttribute("class", "");

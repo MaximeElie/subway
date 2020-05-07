@@ -42,4 +42,12 @@ class SubwayMap {
                 this.selectStation(station.id);
         }
     }
+
+    static selectedStationsNames() {
+        let names = [];
+        for (let i of this.stationsSelected)
+            names.push(HTML.stationName(i[0]));
+
+        return names;
+    }
 }

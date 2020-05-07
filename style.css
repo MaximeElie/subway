@@ -118,3 +118,23 @@
 .underground_map_widget-button-1hyq3IZ7s.underground_map_widget-selected-IJxfI4E3:hover {
     background-color: #2b87db
 }
+
+#main_container,
+#post_container {
+    display: flex;
+}
+
+#post_container {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 20%;
+}
+
+#post_button,
+#response_text {
+    width: 80%;
+    height: 60px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}

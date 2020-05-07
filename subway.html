@@ -4,10 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 
 <body>
-    <div style="display: flex;">
+    <div id="main_container">
         <div class="underground_map_widget-metro-EWxE5zul" style="width: 80%;">
             <svg viewBox="0 0 948.94 1068.2">
 				<defs>
@@ -5631,10 +5632,9 @@
 			</svg>
         </div>
 
-        <div style="display: flex;  flex-direction: column; justify-content: center; align-items: center; width: 20%;">
-            <button style="width: 80%; height: 50px;" onclick="alert('not implemented')">POST</button>
-            <div style="height: 30px;"></div>
-            <textarea style="width: 80%;" readonly></textarea>
+        <div id="post_container">
+            <button id="post_button">POST</button>
+            <textarea id="response_text" readonly></textarea>
         </div>
     </div>
 

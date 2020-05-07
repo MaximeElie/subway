@@ -11,6 +11,7 @@ class Events {
             element.addEventListener("mouseleave", this.handlers.mouseLeaveLine);
             element.addEventListener("click", this.handlers.clickLine);
         }
+        HTML.postButton().addEventListener("click", this.handlers.clickPostButton);
     }
 
     static handlers = class {
@@ -18,46 +19,59 @@ class Events {
         static mouseEnterStation(event) {
             HTML.display.stationHover(HTML.stationFromEvent(event));
         }
-        
+
         static mouseLeaveStation(event) {
             HTML.display.stationNotHover(HTML.stationFromEvent(event));
         }
-        
+
         static clickStation(event) {
             let station = HTML.stationFromEvent(event);
-        
+
             if (!SubwayMap.isStationSelected(station.id)) {
                 SubwayMap.selectStation(station.id);
                 HTML.display.stationSelected(station);
-            }
-            else {
+            } else {
                 SubwayMap.deselectStation(station.id);
                 HTML.display.stationNotSelected(station);
             }
         }
-        
+
         static mouseEnterLine(event) {
             let line = HTML.lineFromEvent(event);
             for (let station of HTML.stationsOf(line.id))
                 HTML.display.stationHover(station);
         }
-        
+
         static mouseLeaveLine(event) {
             let line = HTML.lineFromEvent(event);
             for (let station of HTML.stationsOf(line.id))
                 HTML.display.stationNotHover(station);
         }
-        
+
         static clickLine(event) {
             let line = HTML.lineFromEvent(event);
             SubwayMap.toggleLine(line.id);
 
             for (let station of HTML.stationsOf(line.id)) {
-                if(SubwayMap.isLineSelected(line.id))
+                if (SubwayMap.isLineSelected(line.id))
                     HTML.display.stationSelected(station);
                 else
                     HTML.display.stationNotSelected(station);
             }
+        }
+
+        static clickPostButton(event) {
+            let request = new XMLHttpRequest();
+
+            request.onload = function() { HTML.responseText().textContent = this.responseText; };
+            request.open("POST", "http://77.238.128.166:8111/subway_selected");
+            request.setRequestHeader("Content-Type", "application/json");
+
+            let map = new Map();
+            map.set("stations", SubwayMap.selectedStationsNames());
+            request.send(JSON.stringify(Object.fromEntries(map)));
+
+            console.log(request);
         }
     }
 }
